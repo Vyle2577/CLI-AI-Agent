@@ -1,10 +1,10 @@
 import os
 
+from google.genai import types
+
 
 def get_files_info(working_directory, directory="."):
     """
-    get_files_info
-
     :param path working_directory: working dir boundary for client
     :param path directory: directory to search, defaults to "."
     :return string: returns file info (name, size, dir_check)
@@ -36,3 +36,18 @@ def get_files_info(working_directory, directory="."):
 
     except Exception as e:
         return f"Error listing files: {e}"
+
+
+schema_get_files_info = types.FunctionDeclaration(
+    name="get_files_info",
+    description="Lists files in the specified directory along with their sizes, constrained to the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="The directory to list files from, relative to the working directory. If not provided, lists files in the working directory itself.",
+            ),
+        },
+    ),
+)
